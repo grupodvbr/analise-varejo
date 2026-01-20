@@ -208,21 +208,22 @@ function analisar(){
 
       const card = document.createElement("div");
       card.className = "card";
-      card.innerHTML = `
-        <div class="card-header">
-          <h2>${f.nome}</h2>
-          <span class="badge">${f.valores.length} lançamentos</span>
-        </div>
-        <div class="total">R$ ${f.total.toFixed(2).replace('.',',')}</div>
-        <ul class="details">
-          ${f.valores.map(v=>`
-            <li>
-              <span>Valor</span>
-              <strong>R$ ${v.toFixed(2).replace('.',',')}</strong>
-            </li>
-          `).join("")}
-        </ul>
-      `;
+card.innerHTML = `
+  <div class="card-header">
+    <h2>${f.nome}</h2>
+    <span class="badge">${f.valores.length} lançamentos</span>
+  </div>
+  <div class="total">${formatBR(f.total)}</div>
+  <ul class="details">
+    ${f.valores.map(v=>`
+      <li>
+        <span>Valor</span>
+        <strong>${formatBR(v)}</strong>
+      </li>
+    `).join("")}
+  </ul>
+`;
+
 
       card.onclick = () => {
         const d = card.querySelector(".details");
@@ -232,6 +233,14 @@ function analisar(){
       container.appendChild(card);
     });
 }
+
+function formatBR(valor){
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  }).format(valor);
+}
+
 </script>
 
 </body>
